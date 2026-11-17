@@ -1,0 +1,49 @@
+div#container
+{
+   width: 970px;
+   position: relative;
+   margin: 0 auto 0 auto;
+   text-align: left;
+}
+body
+{
+   background-color: #FFFFFF;
+   background-image: url('images/fgyvhbjnk.gif');
+   background-attachment: scroll;
+   background-position: left top;
+   background-repeat: repeat;
+   background-size: cover;
+   color: #000000;
+   font-family: Arial;
+   font-weight: normal;
+   font-size: 16px;
+   line-height: 1.1875;
+   margin: 0;
+   text-align: center;
+}
+#wb_Heading1
+{
+   background-color: transparent;
+   background-image: url('images/20261113-140223.jpg');
+   background-repeat: repeat;
+   background-position: left top;
+   border: 15px solid #FFFFFF;
+   border-image-source: url('images/framed-corners-2.png');
+   border-image-slice: 15;
+   border-image-width: 15px;
+   border-image-repeat: stretch;
+   margin: 0;
+   padding: 0;
+   text-align: center;
+}
+#Heading1
+{
+   color: #000000;
+   font-family: Arial;
+   font-weight: bold;
+   font-style: normal;
+   font-size: 32px;
+   margin: 0;
+   text-align: center;
+   text-transform: none;
+}

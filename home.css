@@ -1,0 +1,102 @@
+div#container
+{
+   width: 1080px;
+   position: relative;
+   margin: 0 auto 0 auto;
+   text-align: left;
+   /* 新增：让绝对定位的容器在屏幕中居中 */
+   left: 50%;
+   transform: translateX(-50%);
+}
+body
+{
+   background-color: #FFFFFF;
+   background-image: url('images/fgyvhbjnk.gif');
+   background-attachment: scroll;
+   background-position: left top;
+   background-repeat: repeat;
+   background-size: cover;
+   color: #000000;
+   font-family: Arial;
+   font-weight: normal;
+   font-size: 16px;
+   line-height: 1.1875;
+   margin: 0;
+   text-align: center;
+   /* 新增：彻底隐藏浏览器右侧的滚动条 */
+   overflow: hidden; 
+   height: 100vh;
+}
+#wb_Image1 { vertical-align: top; }
+#Image1
+{
+   border: 0px solid #000000;
+   border-radius: 0px;
+   box-sizing: border-box;
+   padding: 0;
+   margin: 0;
+   left: 0;
+   top: 0;
+   width: 100%;
+   height: 100%;
+}
+#wb_Image2 { vertical-align: top; }
+#Image2
+{
+   border: 0px solid #000000;
+   border-radius: 0px;
+   box-sizing: border-box;
+   padding: 0;
+   margin: 0;
+   left: 0;
+   top: 0;
+   width: 100%;
+   height: 100%;
+}
+#wb_Image4 { vertical-align: top; }
+#Image4
+{
+   border: 0px solid #000000;
+   border-radius: 0px;
+   box-sizing: border-box;
+   padding: 0;
+   margin: 0;
+   left: 0;
+   top: 0;
+   width: 100%;
+   height: 100%;
+}
+#wb_Image3 { vertical-align: top; }
+#Image3
+{
+   border: 0px solid #000000;
+   border-radius: 0px;
+   box-sizing: border-box;
+   padding: 0;
+   margin: 0;
+   left: 0;
+   top: 0;
+   width: 100%;
+   height: 100%;
+}
+#wb_Heading1
+{
+   background-color: transparent;
+   background-image: none;
+   border: 0px solid #000000;
+   border-radius: 0px;
+   margin: 0;
+   padding: 0;
+   text-align: left;
+}
+#Heading1
+{
+   color: #9A0D10;
+   font-family: Jokerman;
+   font-weight: bold;
+   font-style: normal;
+   font-size: 11px;
+   margin: 0;
+   text-align: left;
+   text-transform: none;
+}
