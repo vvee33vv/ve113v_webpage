@@ -20,9 +20,6 @@ body
    line-height: 1.1875;
    margin: 0;
    text-align: center;
-   /* 只新增以下两行，用来隐藏滚动条 */
-   overflow: hidden;
-   height: 100vh;
 }
 #wb_Image1
 {
