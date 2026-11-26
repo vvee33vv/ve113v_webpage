@@ -1,228 +1,279 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<title>welcome</title>
-<meta name="generator" content="WYSIWYG Web Builder 20 - https://www.wysiwygwebbuilder.com">
-<link href="/ve113v_webpage/Untitled1.css" rel="stylesheet">
-<link href="/ve113v_webpage/index.css" rel="stylesheet">
-<script src="/ve113v_webpage/jquery-3.7.1.min.js"></script>
-<script src="/ve113v_webpage/wwb20.min.js"></script>
-<script src="/ve113v_webpage/hide-sidebar.js"></script>
+<title>Untitled Page</title>
+<link href="ve113vwebpage.css" rel="stylesheet">
+<link href="index.css" rel="stylesheet">
 </head>
 <body>
-<div id="container">
-<div id="wb_Image1" style="position:absolute;left:264px;top:221px;width:552px;height:444px;z-index:0;">
-<img src="images/back.png" id="Image1" alt=""></div>
-<div id="wb_Image2" style="position:absolute;left:192px;top:318px;width:480px;height:334px;z-index:1;">
-<img src="images/logo.gif" id="Image2" alt=""></div>
-<div id="wb_Image4" style="position:absolute;left:510px;top:559px;width:147px;height:93px;z-index:2;">
-<img src="images/thing.png" id="Image4" alt=""></div>
-<div id="wb_Image3" style="position:absolute;left:550px;top:315px;width:266px;height:341px;z-index:3;">
-<a href="./page1.html" onmouseenter="SetImage('Image3','images/enter2.png');return false;" onmouseleave="SetImage('Image3','images/enter1.png');return false;"><img src="images/enter1.png" id="Image3" alt=""></a></div>
-<div id="Html1" style="position:absolute;left:108px;top:268px;width:75px;height:61px;z-index:4">
+<div id="wb_Image1" style="position:absolute;left:0px;top:0px;width:503px;height:914px;z-index:0;">
+<img src="images/AAA.png" id="Image1" alt=""></div>
+<!-- 鼠标闪粉 -->
+<div id="Html1" style="position:absolute;left:1937px;top:526px;width:75px;height:61px;z-index:1">
+<!-- 鼠标 ★ 星光特效（变小消失版） -->
 <script>
-// <![CDATA[
-var colour=["#F4F47B","#9A0D10","#B0B000"];  // in addition to "random" can be set to any valid colour eg "#f0f" or "red"
-var sparkles=100;
+(function() {
+  // 保持你原来的配色
+  var colours = ["#F4F47B", "#9A0D10", "#B0B000"];
+  var sparks = [];
+  var isAnimating = false;
+  var lastSpawn = 0;
 
-/****************************
-*  Tinkerbell Magic Sparkle *
-*(c)2005-13 mf2fm web-design*
-*  http://www.mf2fm.com/rv  *
-* DON'T EDIT BELOW THIS BOX *
-****************************/
-var x=ox=400;
-var y=oy=300;
-var swide=800;
-var shigh=600;
-var sleft=sdown=0;
-var tiny=new Array();
-var star=new Array();
-var starv=new Array();
-var starx=new Array();
-var stary=new Array();
-var tinyx=new Array();
-var tinyy=new Array();
-var tinyv=new Array();
+  function spawn(x, y) {
+    var el = document.createElement("span");
+    el.innerText = "★";
+    
+    // 初始大小可以稍微大一点点，为了缩小过程更明显
+    var size = 14 + Math.random() * 14; 
+    
+    el.style.cssText = 
+      "position: fixed;" +
+      "left: " + x + "px;" +
+      "top: " + y + "px;" +
+      "color: " + colours[Math.floor(Math.random() * colours.length)] + ";" +
+      "font-size: " + size + "px;" +
+      "pointer-events: none;" +
+      "z-index: 99999;" +
+      "user-select: none;" +
+      "transform: translate(-50%, -50%);" +
+      "will-change: transform;";
+      
+    document.body.appendChild(el);
 
-window.onload=function() { if (document.getElementById) {
-  var i, rats, rlef, rdow;
-  for (var i=0; i<sparkles; i++) {
-    var rats=createDiv(3, 3);
-    rats.style.visibility="hidden";
-    rats.style.zIndex="999";
-    document.body.appendChild(tiny[i]=rats);
-    starv[i]=0;
-    tinyv[i]=0;
-    var rats=createDiv(5, 5);
-    rats.style.backgroundColor="transparent";
-    rats.style.visibility="hidden";
-    rats.style.zIndex="999";
-    var rlef=createDiv(1, 5);
-    var rdow=createDiv(5, 1);
-    rats.appendChild(rlef);
-    rats.appendChild(rdow);
-    rlef.style.top="2px";
-    rlef.style.left="0px";
-    rdow.style.top="0px";
-    rdow.style.left="2px";
-    document.body.appendChild(star[i]=rats);
-  }
-  set_width();
-  sparkle();
-}}
+    sparks.push({
+      el: el,
+      x: x,
+      y: y,
+      vx: (Math.random() - 0.5) * 3, 
+      vy: Math.random() * 2 + 1,     
+      life: 1,                       
+      decay: 0.02 + Math.random() * 0.03, // 消散速度
+      rot: 0,
+      vrot: (Math.random() - 0.5) * 15    
+    });
 
-function sparkle() {
-  var c;
-  if (Math.abs(x-ox)>1 || Math.abs(y-oy)>1) {
-    ox=x;
-    oy=y;
-    for (c=0; c<sparkles; c++) if (!starv[c]) {
-      star[c].style.left=(starx[c]=x)+"px";
-      star[c].style.top=(stary[c]=y+1)+"px";
-      star[c].style.clip="rect(0px, 5px, 5px, 0px)";
-      star[c].childNodes[0].style.backgroundColor=star[c].childNodes[1].style.backgroundColor=colour[Math.floor(Math.random()*colour.length)];
-      star[c].style.visibility="visible";
-      starv[c]=50;
-      break;
+    if (!isAnimating) {
+      isAnimating = true;
+      requestAnimationFrame(update);
     }
   }
-  for (c=0; c<sparkles; c++) {
-    if (starv[c]) update_star(c);
-    if (tinyv[c]) update_tiny(c);
-  }
-  setTimeout("sparkle()", 40);
-}
 
-function update_star(i) {
-  if (--starv[i]==25) star[i].style.clip="rect(1px, 4px, 4px, 1px)";
-  if (starv[i]) {
-    stary[i]+=1+Math.random()*3;
-    starx[i]+=(i%5-2)/5;
-    if (stary[i]<shigh+sdown) {
-      star[i].style.top=stary[i]+"px";
-      star[i].style.left=starx[i]+"px";
-    }
-    else {
-      star[i].style.visibility="hidden";
-      starv[i]=0;
-      return;
-    }
-  }
-  else {
-    tinyv[i]=50;
-    tiny[i].style.top=(tinyy[i]=stary[i])+"px";
-    tiny[i].style.left=(tinyx[i]=starx[i])+"px";
-    tiny[i].style.width="2px";
-    tiny[i].style.height="2px";
-    tiny[i].style.backgroundColor=star[i].childNodes[0].style.backgroundColor;
-    star[i].style.visibility="hidden";
-    tiny[i].style.visibility="visible"
-  }
-}
+  function update() {
+    for (var i = sparks.length - 1; i >= 0; i--) {
+      var s = sparks[i];
+      
+      // 物理更新
+      s.x += s.vx;
+      s.y += s.vy;
+      s.rot += s.vrot;
+      s.life -= s.decay;
 
-function update_tiny(i) {
-  if (--tinyv[i]==25) {
-    tiny[i].style.width="1px";
-    tiny[i].style.height="1px";
-  }
-  if (tinyv[i]) {
-    tinyy[i]+=1+Math.random()*3;
-    tinyx[i]+=(i%5-2)/5;
-    if (tinyy[i]<shigh+sdown) {
-      tiny[i].style.top=tinyy[i]+"px";
-      tiny[i].style.left=tinyx[i]+"px";
+      // 生命值为 0 时移除
+      if (s.life <= 0) {
+        if (s.el.parentNode) s.el.parentNode.removeChild(s.el);
+        sparks.splice(i, 1);
+        continue;
+      }
+
+      s.el.style.left = s.x + "px";
+      s.el.style.top = s.y + "px";
+      // 注意：这里去掉了 opacity，只用 scale 变小，并保留旋转效果
+      s.el.style.transform = "translate(-50%, -50%) scale(" + s.life + ") rotate(" + s.rot + "deg)";
     }
-    else {
-      tiny[i].style.visibility="hidden";
-      tinyv[i]=0;
-      return;
+
+    if (sparks.length > 0) {
+      requestAnimationFrame(update);
+    } else {
+      isAnimating = false;
     }
   }
-  else tiny[i].style.visibility="hidden";
-}
 
-document.onmousemove=mouse;
-function mouse(e) {
-  if (e) {
-    y=e.pageY;
-    x=e.pageX;
-  }
-  else {
-    set_scroll();
-    y=event.y+sdown;
-    x=event.x+sleft;
-  }
-}
-
-window.onscroll=set_scroll;
-function set_scroll() {
-  if (typeof(self.pageYOffset)=='number') {
-    sdown=self.pageYOffset;
-    sleft=self.pageXOffset;
-  }
-  else if (document.body && (document.body.scrollTop || document.body.scrollLeft)) {
-    sdown=document.body.scrollTop;
-    sleft=document.body.scrollLeft;
-  }
-  else if (document.documentElement && (document.documentElement.scrollTop || document.documentElement.scrollLeft)) {
-    sleft=document.documentElement.scrollLeft;
-    sdown=document.documentElement.scrollTop;
-  }
-  else {
-    sdown=0;
-    sleft=0;
-  }
-}
-
-window.onresize=set_width;
-function set_width() {
-  var sw_min=999999;
-  var sh_min=999999;
-  if (document.documentElement && document.documentElement.clientWidth) {
-    if (document.documentElement.clientWidth>0) sw_min=document.documentElement.clientWidth;
-    if (document.documentElement.clientHeight>0) sh_min=document.documentElement.clientHeight;
-  }
-  if (typeof(self.innerWidth)=='number' && self.innerWidth) {
-    if (self.innerWidth>0 && self.innerWidth<sw_min) sw_min=self.innerWidth;
-    if (self.innerHeight>0 && self.innerHeight<sh_min) sh_min=self.innerHeight;
-  }
-  if (document.body.clientWidth) {
-    if (document.body.clientWidth>0 && document.body.clientWidth<sw_min) sw_min=document.body.clientWidth;
-    if (document.body.clientHeight>0 && document.body.clientHeight<sh_min) sh_min=document.body.clientHeight;
-  }
-  if (sw_min==999999 || sh_min==999999) {
-    sw_min=800;
-    sh_min=600;
-  }
-  swide=sw_min;
-  shigh=sh_min;
-}
-
-function createDiv(height, width) {
-  var div=document.createElement("div");
-  div.style.position="absolute";
-  div.style.height=height+"px";
-  div.style.width=width+"px";
-  div.style.overflow="hidden";
-  return (div);
-}
-
-function newColour() {
-  var c=new Array();
-  c[0]=255;
-  c[1]=Math.floor(Math.random()*256);
-  c[2]=Math.floor(Math.random()*(256-c[1]/2));
-  c.sort(function(){return (0.5 - Math.random());});
-  return ("rgb("+c[0]+", "+c[1]+", "+c[2]+")");
-}
-// ]]>
+  // 监听鼠标滑动
+  document.addEventListener("mousemove", function(e) {
+    var now = Date.now();
+    if (now - lastSpawn < 30) return; // 节流
+    lastSpawn = now;
+    spawn(e.clientX, e.clientY);
+  });
+})();
 </script></div>
-<div id="wb_Heading1" style="position:absolute;left:277px;top:643px;width:202px;height:22px;z-index:5;">
-<h1 id="Heading1">best viewed on a 1920x1080 display</h1></div>
-</div>
-<div style="z-index:6">
+<div id="wb_Image2" style="position:absolute;left:479px;top:8px;width:1431px;height:900px;z-index:2;">
+<img src="images/thing.png" id="Image2" alt=""></div>
+<div id="wb_Image3" style="position:absolute;left:0px;top:0px;width:443px;height:310px;z-index:3;">
+<img src="images/logo.gif" id="Image3" alt=""></div>
+<div id="wb_ThemeableButton1" style="position:absolute;left:2px;top:339px;width:201px;height:61px;z-index:4;">
+<a class="ui-button ui-corner-all" id="ThemeableButton1" href="" style="width:100%;height:100%;">ABOUT ME</a></div>
+<div id="wb_Image4" style="position:absolute;left:22px;top:357px;width:26px;height:23px;z-index:5;">
+<img src="images/时间轴 10001.png" id="Image4" alt=""></div>
+<div id="wb_ThemeableButton2" style="position:absolute;left:253px;top:339px;width:201px;height:61px;z-index:6;">
+<a class="ui-button ui-corner-all" id="ThemeableButton2" href="" style="width:100%;height:100%;">MY WORKS</a></div>
+<div id="wb_Image5" style="position:absolute;left:262px;top:354px;width:31px;height:27px;z-index:7;">
+<img src="images/时间轴 10005.png" id="Image5" alt=""></div>
+<div id="wb_Image6" style="position:absolute;left:204px;top:354px;width:31px;height:27px;z-index:8;">
+<img src="images/7.png" id="Image6" alt=""></div>
+<div id="wb_ThemeableButton3" style="position:absolute;left:2px;top:418px;width:201px;height:61px;z-index:9;">
+<a class="ui-button ui-corner-all" id="ThemeableButton3" href="" style="width:100%;height:100%;">MY BLOGS</a></div>
+<div id="wb_ThemeableButton4" style="position:absolute;left:253px;top:418px;width:201px;height:61px;z-index:10;">
+<a class="ui-button ui-corner-all" id="ThemeableButton4" href="" style="width:100%;height:100%;">TRASH BIN</a></div>
+<div id="wb_Image7" style="position:absolute;left:204px;top:433px;width:31px;height:27px;z-index:11;">
+<img src="images/7.png" id="Image7" alt=""></div>
+<div id="wb_Image8" style="position:absolute;left:19px;top:433px;width:29px;height:26px;z-index:12;">
+<img src="images/8.png" id="Image8" alt=""></div>
+<div id="wb_Image9" style="position:absolute;left:262px;top:433px;width:31px;height:27px;z-index:13;">
+<img src="images/时间轴 10004.png" id="Image9" alt=""></div>
+<div id="wb_ThemeableButton5" style="position:absolute;left:253px;top:494px;width:201px;height:61px;z-index:14;">
+<a class="ui-button ui-corner-all" id="ThemeableButton5" href="" style="width:100%;height:100%;">  CONTACT ME</a></div>
+<div id="wb_Image20" style="position:absolute;left:479px;top:0px;width:1408px;height:344px;z-index:15;">
+<img src="images/stamp.png" id="Image20" alt=""></div>
+<div id="wb_Image10" style="position:absolute;left:262px;top:509px;width:31px;height:27px;z-index:16;">
+<img src="images/时间轴 10002.png" id="Image10" alt=""></div>
+<div id="wb_Image11" style="position:absolute;left:204px;top:509px;width:31px;height:27px;z-index:17;">
+<img src="images/7.png" id="Image11" alt=""></div>
+<div id="wb_ThemeableButton6" style="position:absolute;left:2px;top:494px;width:201px;height:61px;z-index:18;">
+<a class="ui-button ui-corner-all" id="ThemeableButton6" href="" style="width:100%;height:100%;">  GUEST BOOK</a></div>
+<div id="wb_Image12" style="position:absolute;left:19px;top:509px;width:29px;height:25px;z-index:19;">
+<img src="images/时间轴 10003.png" id="Image12" alt=""></div>
+<div id="wb_ThemeableButton7" style="position:absolute;left:124px;top:569px;width:201px;height:61px;z-index:20;">
+<a class="ui-button ui-corner-all" id="ThemeableButton7" href="" style="width:100%;height:100%;">    SITE MAP</a></div>
+<div id="wb_Image13" style="position:absolute;left:160px;top:584px;width:31px;height:27px;z-index:21;">
+<img src="images/时间轴 10006.png" id="Image13" alt=""></div>
+<div id="wb_Image15" style="position:absolute;left:1536px;top:0px;width:382px;height:246px;z-index:22;">
+<img src="images/插画10.gifphone.gif" id="Image15" alt=""></div>
+<div id="wb_Image16" style="position:absolute;left:203px;top:630px;width:236px;height:221px;z-index:23;">
+<img src="images/pin1.png" id="Image16" alt=""></div>
+<div id="wb_Image17" style="position:absolute;left:0px;top:672px;width:238px;height:207px;z-index:24;">
+<img src="images/pin2.png" id="Image17" alt=""></div>
+<div id="wb_Image14" style="position:absolute;left:293px;top:730px;width:353px;height:363px;z-index:25;">
+<img src="images/wa.png" id="Image14" alt=""></div>
+<div id="wb_Heading1" style="position:absolute;left:137px;top:318px;width:169px;height:26px;z-index:26;">
+<h1 id="Heading1">*MAIN PAGES*</h1></div>
+<div id="wb_Image18" style="position:absolute;left:382px;top:0px;width:200px;height:156px;z-index:27;">
+<img src="images/STAR.png" id="Image18" alt=""></div>
+<div id="wb_Image19" style="position:absolute;left:1778px;top:758px;width:200px;height:156px;z-index:28;">
+<img src="images/STAR.png" id="Image19" alt=""></div>
+<div id="wb_Heading3" style="position:absolute;left:85px;top:683px;width:145px;height:42px;z-index:29;">
+<h1 id="Heading3">DOODLE</h1></div>
+<div id="wb_Heading2" style="position:absolute;left:41px;top:656px;width:145px;height:42px;z-index:30;">
+<h1 id="Heading2">RANDOM</h1></div>
+<div id="wb_Heading4" style="position:absolute;left:191px;top:630px;width:145px;height:42px;z-index:31;">
+<h1 id="Heading4">NEW</h1></div>
+<div id="wb_Heading5" style="position:absolute;left:230px;top:658px;width:145px;height:42px;z-index:32;">
+<h1 id="Heading5">PAGES!</h1></div>
+<div id="wb_Heading6" style="position:absolute;left:451px;top:10px;width:196px;height:42px;z-index:33;">
+<h1 id="Heading6">HOMEPAGE</h1></div>
+
+<!-- 鼠标 -->
+<div id="Html3" style="position:absolute;left:1979px;top:611px;width:75px;height:61px;z-index:35">
+<!-- 自定义图片鼠标指针 -->
+<script>
+(function() {
+  // 防止重复插入
+  if (document.getElementById('custom-image-cursor')) return;
+
+  // ==========================================
+  // ⚙️ 配置区：只需修改这里即可
+  // ==========================================
+  var imageUrl = 'images/cursor.png'; // 【必填】你的自定义鼠标图片路径 (支持png/gif/svg)
+  var size = 32;                      // 图片显示大小 (px)
+  
+  // 偏移量：用来校准鼠标的“准心”。
+  // 默认设置为图片中心对准鼠标位置 (-50%, -50%)。
+  // 如果你的图片是箭头，想让箭头的左上角对准鼠标，请改成 translate(0, 0)。
+  var offsetX = '-50%';
+  var offsetY = '-50%';
+  
+  // 顺滑跟随：1 = 完全无延迟（最精准），0.2 = 有一定延迟感（更Q弹）。
+  var followSpeed = 0.6; 
+  // ==========================================
+
+  // 1. 隐藏系统默认鼠标
+  var style= document.createElement('style');
+  style.innerHTML = `
+    * { cursor: none !important; }
+    #custom-image-cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: ${size}px;
+      height: ${size}px;
+      pointer-events: none; /* 确保不阻挡点击 */
+      z-index: 2147483647;  /* 保证在最顶层 */
+      background-image: url('${imageUrl}');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      transform-origin: center center;
+      transition: transform 0.1s ease-out;
+      will-change: transform, left, top;
+    }
+    /* 点击时的缩放反馈 */
+    #custom-image-cursor.clicking {
+      transform: translate(${offsetX}, ${offsetY}) scale(0.85);
+    }
+    /* 悬停在可点击按钮上时的放大反馈 */
+    #custom-image-cursor.hovering {
+      transform: translate(${offsetX}, ${offsetY}) scale(1.15);
+    }
+  `;
+  document.head.appendChild(style);
+
+  // 2. 创建自定义鼠标元素
+  var cursor = document.createElement('div');
+  cursor.id = 'custom-image-cursor';
+  // 初始化基础偏移
+  cursor.style.transform = `translate(${offsetX}, ${offsetY})`;
+  document.body.appendChild(cursor);
+
+  // 3. 鼠标位置追踪
+  var mouseX = window.innerWidth / 2;
+  var mouseY = window.innerHeight / 2;
+  var cursorX = mouseX;
+  var cursorY = mouseY;
+
+  document.addEventListener('mousemove', function(e) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  // 4. 平滑跟随动画
+  function render() {
+    // 差值平滑计算
+    cursorX += (mouseX - cursorX) * followSpeed;
+    cursorY += (mouseY - cursorY) * followSpeed;
+
+    cursor.style.left = cursorX + 'px';
+    cursor.style.top = cursorY + 'px';
+
+    requestAnimationFrame(render);
+  }
+  render();
+
+  // 5. 交互反馈：鼠标按下 / 松开
+  document.addEventListener('mousedown', function() {
+    cursor.classList.add('clicking');
+  });
+  document.addEventListener('mouseup', function() {
+    cursor.classList.remove('clicking');
+  });
+
+  // 6. 交互反馈：悬停在链接/按钮上
+  document.addEventListener('mouseover', function(e) {
+    var target = e.target;
+    if (target.tagName === 'A' || target.tagName === 'BUTTON' || target.classList.contains('ui-button')) {
+      cursor.classList.add('hovering');
+    }
+  });
+  document.addEventListener('mouseout', function(e) {
+    var target = e.target;
+    if (target.tagName === 'A' || target.tagName === 'BUTTON' || target.classList.contains('ui-button')) {
+      cursor.classList.remove('hovering');
+    }
+  });
+
+})();
+</script></div>
+<div style="z-index:36">
 <script>
 var disabled_message = "";
 document.oncontextmenu = function() 
@@ -247,5 +298,83 @@ document.onmousedown = function md(e)
 }
 </script>
 </div>
-</body>
+<!-- 湍流背景动效脚本（完美无重影版） -->
+<script>
+(function() {
+  if (document.getElementById('js-bg-wrapper')) return;
+
+  // 1. 移除 body 原背景，避免干扰
+  document.body.style.backgroundImage = 'none';
+  document.body.style.backgroundColor = '#FFFFFF';
+
+  // 2. 创建裁剪容器（保证只显示视口内部）
+  var wrapper = document.createElement('div');
+  wrapper.id = 'js-bg-wrapper';
+  wrapper.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: -9999; pointer-events: none; overflow: hidden; background-color: #FFF;';
+
+  // 3. 创建滤镜层（向四周外扩 100px 预留形变空间）
+  var filterLayer = document.createElement('div');
+  // 核心对齐：left:-100px，同时 background-position: 100px，使得图案坐标系与屏幕(0,0)完全重合
+  filterLayer.style.cssText = 'position: absolute; left: -100px; top: -100px; width: calc(100% + 200px); height: calc(100% + 200px); ' +
+    'background-image: url("images/BG.png"); background-repeat: repeat; background-position: 100px 100px; ' +
+    'filter: url(#js-water-flow); -webkit-filter: url(#js-water-flow); will-change: filter;';
+
+  wrapper.appendChild(filterLayer);
+
+  // 4. 动态注入 SVG 滤镜
+  var svgNS = "http://www.w3.org/2000/svg";
+  var svg = document.createElementNS(svgNS, "svg");
+  svg.style.cssText = 'position: absolute; width: 0; height: 0; pointer-events: none;';
+  
+  var defs = document.createElementNS(svgNS, "defs");
+  var filter = document.createElementNS(svgNS, "filter");
+  // 给滤镜留足计算区域
+  filter.setAttribute("id", "js-water-flow");
+  filter.setAttribute("x", "-20%");
+  filter.setAttribute("y", "-20%");
+  filter.setAttribute("width", "140%");
+  filter.setAttribute("height", "140%");
+  filter.setAttribute("color-interpolation-filters", "sRGB");
+
+  // 生成湍流
+  var turbulence = document.createElementNS(svgNS, "feTurbulence");
+  turbulence.setAttribute("type", "fractalNoise");
+  turbulence.setAttribute("baseFrequency", "0.008 0.012"); // 噪声频率
+  turbulence.setAttribute("numOctaves", "2");
+  turbulence.setAttribute("seed", "5");
+  turbulence.setAttribute("result", "noise");
+
+  var anim1 = document.createElementNS(svgNS, "animate");
+  anim1.setAttribute("attributeName", "baseFrequency");
+  anim1.setAttribute("dur", "25s");
+  anim1.setAttribute("values", "0.008 0.012;0.014 0.008;0.008 0.012");
+  anim1.setAttribute("repeatCount", "indefinite");
+  turbulence.appendChild(anim1);
+
+  // 施加位移
+  var displacement = document.createElementNS(svgNS, "feDisplacementMap");
+  displacement.setAttribute("in", "SourceGraphic");
+  displacement.setAttribute("in2", "noise");
+  displacement.setAttribute("scale", "24"); // 扭曲幅度
+  displacement.setAttribute("xChannelSelector", "R");
+  displacement.setAttribute("yChannelSelector", "G");
+  displacement.setAttribute("result", "displaced");
+
+  var anim2 = document.createElementNS(svgNS, "animate");
+  anim2.setAttribute("attributeName", "scale");
+  anim2.setAttribute("dur", "18s");
+  anim2.setAttribute("values", "16;30;16");
+  anim2.setAttribute("repeatCount", "indefinite");
+  displacement.appendChild(anim2);
+
+  filter.appendChild(turbulence);
+  filter.appendChild(displacement);
+  defs.appendChild(filter);
+  svg.appendChild(defs);
+
+  // 5. 插入 DOM
+  document.body.insertBefore(wrapper, document.body.firstChild);
+  document.body.insertBefore(svg, document.body.firstChild);
+})();
+</script></body>
 </html>
