@@ -544,22 +544,6 @@ body
    background-position: center top;
    color: #F4F47B;
 }
-#wb_Image20
-{
-   vertical-align: top;
-}
-#Image20
-{
-   border: 0px solid #000000;
-   border-radius: 0px;
-   box-sizing: border-box;
-   padding: 0;
-   margin: 0;
-   left: 0;
-   top: 0;
-   width: 100%;
-   height: 100%;
-}
 #wb_Image10
 {
    vertical-align: top;
@@ -674,6 +658,22 @@ body
    vertical-align: top;
 }
 #Image12
+{
+   border: 0px solid #000000;
+   border-radius: 0px;
+   box-sizing: border-box;
+   padding: 0;
+   margin: 0;
+   left: 0;
+   top: 0;
+   width: 100%;
+   height: 100%;
+}
+#wb_Image20
+{
+   vertical-align: top;
+}
+#Image20
 {
    border: 0px solid #000000;
    border-radius: 0px;
