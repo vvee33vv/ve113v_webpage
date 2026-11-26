@@ -275,7 +275,8 @@
 </script></div>
 
 
-<div style="z-index:38">
+
+<div style="z-index:39">
 <script>
 var disabled_message = "";
 document.oncontextmenu = function() 
@@ -425,5 +426,14 @@ document.onmousedown = function md(e)
     console.log('✅ 全局字体强制刷新完毕！');
   }
 })();
+</script><!-- 禁止图片拖动脚本 -->
+<script>
+  // 监听全局的 dragstart 事件（也就是开始拖动的瞬间）
+  document.addEventListener('dragstart', function(e) {
+    // 如果被拖动的元素是图片，就阻止它的默认拖动行为
+    if (e.target.tagName === 'IMG') {
+      e.preventDefault();
+    }
+  });
 </script></body>
 </html>
