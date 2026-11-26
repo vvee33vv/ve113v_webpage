@@ -1031,9 +1031,3 @@ body
    text-transform: none;
    text-shadow: 2px 2px 0px rgba(154,13,16,1.00);
 }
-/* 强制覆盖 */
-#Heading1, #Heading2, #Heading3, #Heading4, #Heading5, #Heading6,
-#ThemeableButton1, #ThemeableButton2, #ThemeableButton3, #ThemeableButton4,
-#ThemeableButton5, #ThemeableButton6, #ThemeableButton7 {
-   font-family: 'Jokerman', Arial, sans-serif !important;
-}
