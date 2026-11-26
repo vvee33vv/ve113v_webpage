@@ -1,3 +1,12 @@
+/* 引入自定义字体 Jokerman */
+@font-face {
+   font-family: 'JOKERMAN';
+   /* 下面这行路径必须和你的字体存放位置对应 */
+   src: url('fonts/JOKERMAN.TTF') format('truetype'); 
+   font-weight: normal;
+   font-style: normal;
+   font-display: swap; /* 让字体加载时先用系统默认字显示，加载完再替换，避免文字闪烁或空白 */
+}
 body
 {
    background-color: #FFFFFF;
@@ -1021,13 +1030,4 @@ body
    text-align: center;
    text-transform: none;
    text-shadow: 2px 2px 0px rgba(154,13,16,1.00);
-}
-/* 引入自定义字体 Jokerman */
-@font-face {
-   font-family: 'Jokerman';
-   /* 下面这行路径必须和你的字体存放位置对应 */
-   src: url('fonts/Jokerman.ttf') format('truetype'); 
-   font-weight: normal;
-   font-style: normal;
-   font-display: swap; /* 让字体加载时先用系统默认字显示，加载完再替换，避免文字闪烁或空白 */
 }
