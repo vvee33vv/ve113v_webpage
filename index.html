@@ -280,7 +280,9 @@
 
 <!-- 随机图片 -->
 <div id="Html7" style="position:absolute;left:20px;top:698px;width:186px;height:148px;z-index:40">
-<div id="random-bg" style="width:100%; height:100%; background-size:contain; background-position:center; background-repeat:no-repeat; margin:0; padding:0;"></div>
+
+<div id="random-bg" style="width:100%; height:100%; background-size:contain; background-position:center; background-repeat:no-repeat; margin:0; padding:0; cursor:pointer;"></div>
+
 <script>
   var imgs = [
     "images/thing0001.png",
@@ -289,6 +291,7 @@
     "images/thing0004.png",
     "images/thing0005.png"
   ];
+  // 随机抽取一张图作为背景
   document.getElementById('random-bg').style.backgroundImage = "url('" + imgs[Math.floor(Math.random() * imgs.length)] + "')";
 </script></div>
 <div style="z-index:41">
