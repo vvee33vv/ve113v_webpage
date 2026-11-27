@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Page</title>
+<meta name="generator" content="WYSIWYG Web Builder 20 - https://www.wysiwygwebbuilder.com">
+<link href="ve113vwebpage.css" rel="stylesheet">
+<link href="page1.css" rel="stylesheet">
+</head>
+<body>
+
+
+<!-- 全局字体强制刷新终极脚本 -->
+<script>
+(function() {
+  // 等待字体加载完毕（如果使用了 Base64 或前面的 @font-face）
+  if (document.fonts) {
+    document.fonts.load('16px Jokerman').then(function() {
+      forceFont();
+    });
+    // 备用：如果 1 秒后还没加载完，也强行刷一次
+    setTimeout(forceFont, 1000);
+  } else {
+    // 老旧浏览器直接刷新
+    setTimeout(forceFont, 500);
+  }
+
+  function forceFont() {
+    // 1. 指定需要强制改字体的元素选择器
+    // 包含了你页面里所有的标题(h1)、按钮(a)、以及可能会显示文字的 div
+    var elements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, a, button, span, .ui-button');
+    
+    // 2. 遍历并强行赋值
+    for (var i = 0; i < elements.length; i++) {
+      var el = elements[i];
+      
+      // 排除掉纯图片的容器或者没有文字的元素（防止破坏布局）
+      if (el.innerText && el.innerText.trim() !== '') {
+        el.style.setProperty('font-family', "'Jokerman', 'Arial', sans-serif", 'important');
+      }
+    }
+    
+    // 3. 单独针对你网页里特定的按钮 ID 再补一刀（双重保险）
+    var ids = [
+      'Heading1', 'Heading2', 'Heading3', 'Heading4', 'Heading5', 'Heading6',
+      'ThemeableButton1', 'ThemeableButton2', 'ThemeableButton3', 
+      'ThemeableButton4', 'ThemeableButton5', 'ThemeableButton6', 'ThemeableButton7'
+    ];
+    
+    for (var j = 0; j < ids.length; j++) {
+      var node = document.getElementById(ids[j]);
+      if (node) {
+        node.style.setProperty('font-family', "'Jokerman', 'Arial', sans-serif", 'important');
+      }
+    }
+    
+    console.log('✅ 全局字体强制刷新完毕！');
+  }
+})();
+</script></body>
+</html>

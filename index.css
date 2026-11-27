@@ -1022,11 +1022,31 @@ body
    text-transform: none;
    text-shadow: 2px 2px 0px rgba(154,13,16,1.00);
 }
-/* 放在哪里都可以 */
-@font-face {
-   font-family: 'Jokerman';
-   src: url('fonts/JOKERMAN.TTF') format('truetype'); /* 注意路径和大小写 */
-   font-weight: normal;
+#wb_Heading7
+{
+   background-color: transparent;
+   background-image: none;
+   border: 0px solid #000000;
+   border-radius: 0px;
+   margin: 0;
+   padding: 0;
+   text-align: left;
+}
+#Heading7
+{
+   color: #F4F47B;
+   font-family: "Uranus Pixel 11Px";
+   font-weight: bold;
    font-style: normal;
-   font-display: swap;
+   font-size: 20px;
+   margin: 0;
+   text-align: left;
+   text-transform: none;
+}
+/* 禁止全站内容被选中和拖拽出蓝框 */
+* {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }

@@ -1,0 +1,19 @@
+body
+{
+   background-color: #FFFFFF;
+   color: #000000;
+   font-family: Arial;
+   font-weight: normal;
+   font-size: 16px;
+   line-height: 1.1875;
+   margin: 0;
+   padding: 0;
+}
+/* 放在哪里都可以 */
+@font-face {
+   font-family: 'Jokerman';
+   src: url('fonts/JOKERMAN.TTF') format('truetype'); /* 注意路径和大小写 */
+   font-weight: normal;
+   font-style: normal;
+   font-display: swap;
+}
