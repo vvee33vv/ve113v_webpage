@@ -1043,10 +1043,21 @@ body
    text-align: left;
    text-transform: none;
 }
-/* 禁止全站内容被选中和拖拽出蓝框 */
-* {
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
+/* =========================================
+   全站强制禁止选中（终极版）
+   ========================================= */
+html, body, * {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* 注意：如果你有输入框，必须允许它们被选中，否则无法打字 */
+input, textarea {
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  user-select: text !important;
 }

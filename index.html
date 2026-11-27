@@ -277,7 +277,8 @@
 <div id="wb_Heading7" style="position:absolute;left:520px;top:310px;width:621px;height:142px;z-index:37;">
 <h1 id="Heading7">你好呀，我的名字是VE113V</h1></div>
 
-<div style="z-index:39">
+
+<div style="z-index:40">
 <script>
 var disabled_message = "";
 document.oncontextmenu = function() 
@@ -387,6 +388,28 @@ document.onmousedown = function md(e)
     // 如果被拖动的元素是图片，就阻止它的默认拖动行为
     if (e.target.tagName === 'IMG') {
       e.preventDefault();
+    }
+  });
+</script><!-- 终极防选中/防拖拽脚本 -->
+<script>
+  document.addEventListener('selectstart', function(e) {
+    // 如果选中的是输入框或文本域，放行；其他一律拦截
+    if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+      e.preventDefault();
+    }
+  });
+
+  document.addEventListener('dragstart', function(e) {
+    // 拦截所有图片和文字的拖拽
+    e.preventDefault();
+  });
+  
+  // 针对部分浏览器的双击选中拦截
+  document.addEventListener('mousedown', function(e) {
+    if (e.detail > 1) { // 双击及以上
+      if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+      }
     }
   });
 </script></body>
