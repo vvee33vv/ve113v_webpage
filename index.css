@@ -1062,7 +1062,21 @@ input, textarea {
    text-transform: none;
    text-shadow: 3px 3px 0px rgba(154,13,16,0.50);
 }
-  /* 定义抖动动画 */
+  /* 基础样式 */
+  #random-bg {
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    /* 默认悬停抖动的中心点居中 */
+    transform-origin: center center;
+  }
+
+  /* 1. 悬停抖动动画 */
   @keyframes shake-anim {
     0% { transform: translate(0, 0) rotate(0deg); }
     20% { transform: translate(-3px, 0) rotate(-3deg); }
@@ -1071,10 +1085,27 @@ input, textarea {
     80% { transform: translate(3px, 0) rotate(3deg); }
     100% { transform: translate(0, 0) rotate(0deg); }
   }
-
-  /* 鼠标移上去触发动画 */
-  #random-bg:hover {
+  
+  #random-bg.shake {
     animation: shake-anim 0.4s ease-in-out;
+  }
+
+  /* ==========================================
+     2. 点击 Q 弹跳跃动画 (底部贴地版)
+     ========================================== */
+  @keyframes bounce-anim {
+    0%   { transform: translateY(0) scale(1, 1); }
+    25%  { transform: translateY(-30px) scale(0.9, 1.1); }   /* 起跳：整体上移，拉长变瘦 */
+    45%  { transform: translateY(0) scale(1.15, 0.85); }     /* 落地：底边贴地，压扁变宽 */
+    65%  { transform: translateY(-15px) scale(0.95, 1.05); } /* 小弹起：惯性回弹 */
+    85%  { transform: translateY(0) scale(1.05, 0.95); }     /* 小落地：轻压一下 */
+    100% { transform: translateY(0) scale(1, 1); }           /* 恢复原状 */
+  }
+
+  #random-bg.bounce {
+    /* 【核心修改】强制把动画中心点固定在底部中间 */
+    transform-origin: bottom center !important; 
+    animation: bounce-anim 0.7s cubic-bezier(0.28, 0.84, 0.42, 1);
   }
   #pin-wrapper {
     width: 100%;
