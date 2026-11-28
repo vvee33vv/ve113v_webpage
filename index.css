@@ -669,22 +669,6 @@ body
    width: 100%;
    height: 100%;
 }
-#wb_Image20
-{
-   vertical-align: top;
-}
-#Image20
-{
-   border: 0px solid #000000;
-   border-radius: 0px;
-   box-sizing: border-box;
-   padding: 0;
-   margin: 0;
-   left: 0;
-   top: 0;
-   width: 100%;
-   height: 100%;
-}
 #ThemeableButton7
 {
    font-family: Jokerman;
@@ -1022,6 +1006,40 @@ body
    text-transform: none;
    text-shadow: 2px 2px 0px rgba(154,13,16,1.00);
 }
+/* =========================================
+   全站强制禁止选中（终极版）
+   ========================================= */
+html, body, * {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* 注意：如果你有输入框，必须允许它们被选中，否则无法打字 */
+input, textarea {
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  user-select: text !important;
+}
+#wb_Image20
+{
+   vertical-align: top;
+}
+#Image20
+{
+   border: 0px solid #000000;
+   border-radius: 0px;
+   box-sizing: border-box;
+   padding: 0;
+   margin: 0;
+   left: 0;
+   top: 0;
+   width: 100%;
+   height: 100%;
+}
 #wb_Heading7
 {
    background-color: transparent;
@@ -1042,24 +1060,7 @@ body
    margin: 0;
    text-align: left;
    text-transform: none;
-}
-/* =========================================
-   全站强制禁止选中（终极版）
-   ========================================= */
-html, body, * {
-  -webkit-user-select: none !important;
-  -moz-user-select: none !important;
-  -ms-user-select: none !important;
-  user-select: none !important;
-  -webkit-tap-highlight-color: transparent !important;
-}
-
-/* 注意：如果你有输入框，必须允许它们被选中，否则无法打字 */
-input, textarea {
-  -webkit-user-select: text !important;
-  -moz-user-select: text !important;
-  -ms-user-select: text !important;
-  user-select: text !important;
+   text-shadow: 3px 3px 0px rgba(154,13,16,0.50);
 }
   /* 定义抖动动画 */
   @keyframes shake-anim {
@@ -1074,4 +1075,85 @@ input, textarea {
   /* 鼠标移上去触发动画 */
   #random-bg:hover {
     animation: shake-anim 0.4s ease-in-out;
+  }
+  #pin-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #my-drag-pin {
+    position: absolute;
+    width: 250px; 
+    height: 300px; 
+    
+    cursor: grab;
+    z-index: 99999;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* 内部容器负责摇晃 */
+  #pin-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    /* 旋转中心点：顶部中央 */
+    transform-origin: 50% 25px; 
+  }
+
+  /* ==========================================
+     【修改这里】完美的无缝循环钟摆动画
+     ========================================== */
+  @keyframes smooth-loop-swing {
+    0% { transform: rotate(-4deg); }   /* 左极限 */
+    50% { transform: rotate(4deg); }   /* 右极限 */
+    100% { transform: rotate(-4deg); } /* 回到左极限，完美衔接下一次循环 */
+  }
+
+  /* 
+    拖拽状态触发动画：
+    1. 1.5s 让摇晃更悠哉。
+    2. ease-in-out 让它在两边有“悬挂停顿”的物理感。
+    3. infinite 无限循环。
+  */
+  #my-drag-pin.dragging #pin-inner {
+    animation: smooth-loop-swing 1.5s ease-in-out infinite;
+  }
+
+  /* 底图 */
+  #my-drag-pin img.pin-bg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
+  }
+
+  /* --- 拖拽中（阴影） --- */
+  #my-drag-pin.dragging {
+    position: fixed; 
+    cursor: grabbing;
+    filter: drop-shadow(3px 3px 0px rgb(139, 27, 13));
+  }
+
+  /* 文字层 */
+  .pin-text {
+    position: absolute;
+    top: 87px; 
+    left: 45px; 
+    right: 20px;
+    
+    font-family: 'Uranus Pixel 11Px', monospace; 
+    color: rgb(139, 27, 13); 
+    font-size: 22px; 
+    line-height: 50px; 
+    text-align: left; 
+    pointer-events: none;
+  }
+
+  .pin-text div {
+    display: block;
   }
