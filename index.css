@@ -1096,35 +1096,14 @@ input, textarea {
     -webkit-user-select: none;
   }
 
-  /* 内部容器负责摇晃 */
   #pin-inner {
     width: 100%;
     height: 100%;
     position: relative;
-    /* 旋转中心点：顶部中央 */
     transform-origin: 50% 25px; 
+    will-change: transform; /* 开启硬件加速 */
   }
 
-  /* ==========================================
-     【修改这里】完美的无缝循环钟摆动画
-     ========================================== */
-  @keyframes smooth-loop-swing {
-    0% { transform: rotate(-4deg); }   /* 左极限 */
-    50% { transform: rotate(4deg); }   /* 右极限 */
-    100% { transform: rotate(-4deg); } /* 回到左极限，完美衔接下一次循环 */
-  }
-
-  /* 
-    拖拽状态触发动画：
-    1. 1.5s 让摇晃更悠哉。
-    2. ease-in-out 让它在两边有“悬挂停顿”的物理感。
-    3. infinite 无限循环。
-  */
-  #my-drag-pin.dragging #pin-inner {
-    animation: smooth-loop-swing 1.5s ease-in-out infinite;
-  }
-
-  /* 底图 */
   #my-drag-pin img.pin-bg {
     width: 100%;
     height: 100%;
@@ -1132,14 +1111,12 @@ input, textarea {
     pointer-events: none;
   }
 
-  /* --- 拖拽中（阴影） --- */
   #my-drag-pin.dragging {
     position: fixed; 
     cursor: grabbing;
     filter: drop-shadow(3px 3px 0px rgb(139, 27, 13));
   }
 
-  /* 文字层 */
   .pin-text {
     position: absolute;
     top: 87px; 

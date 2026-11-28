@@ -321,10 +321,22 @@
     window.__pinDragInitialized = true;
 
     var pin = document.getElementById('my-drag-pin');
+    var pinInner = document.getElementById('pin-inner');
     var bgImg = document.getElementById('pin-bg-img');
     var isDragging = false;
     var startX, startY;
-
+    
+    // 物理摇摆变量
+    var angle = 0;          
+    var angularVel = 0;     
+    var lastX = 0;          
+    var targetAngle = 0;    
+    
+    // 物理参数
+    var stiffness = 0.08;    // 弹簧硬度（稍微调软了一点，摇晃更明显）
+    var damping = 0.82;      // 阻尼摩擦（越小停得越快）
+    var maxAngle = 15;       // 最大倾斜角度
+    
     function getPos(e) {
       if (e.touches && e.touches.length > 0) {
         return { x: e.touches[0].clientX, y: e.touches[0].clientY };
@@ -335,6 +347,7 @@
     function startDrag(e) {
       var pos = getPos(e);
       isDragging = true;
+      lastX = pos.x; 
 
       var rect = pin.getBoundingClientRect();
       pin.style.position = 'fixed';
@@ -349,37 +362,39 @@
       bgImg.src = 'images/movepin2.png';
       pin.classList.add('dragging');
       
+      // 启动物理渲染循环
+      requestAnimationFrame(renderSwing);
+      
       if (e.cancelable) e.preventDefault();
     }
 
-    /* ==========================================
-       只修改了这个 doDrag 函数，加了边界限制
-       ========================================== */
     function doDrag(e) {
       if (!isDragging) return;
       var pos = getPos(e);
 
-      // 计算出原本想要移动到的位置
+      // 计算瞬时拖动速度
+      var vx = pos.x - lastX;
+      lastX = pos.x;
+
+      // 速度映射为目标倾斜角度
+      targetAngle = vx * 0.8;
+      
+      if (targetAngle > maxAngle) targetAngle = maxAngle;
+      if (targetAngle < -maxAngle) targetAngle = -maxAngle;
+
+      // 边界限制
       var newLeft = pos.x - startX;
       var newTop = pos.y - startY;
-
-      // 获取屏幕尺寸和当前拖拽元素的尺寸
       var winWidth = window.innerWidth;
       var winHeight = window.innerHeight;
       var pinWidth = pin.offsetWidth;
       var pinHeight = pin.offsetHeight;
 
-      // 限制 left (不能小于0，不能大于 屏幕宽 - 元素宽)
-      var maxLeft = winWidth - pinWidth;
       if (newLeft < 0) newLeft = 0;
-      if (newLeft > maxLeft) newLeft = maxLeft;
-
-      // 限制 top (不能小于0，不能大于 屏幕高 - 元素高)
-      var maxTop = winHeight - pinHeight;
+      if (newLeft > winWidth - pinWidth) newLeft = winWidth - pinWidth;
       if (newTop < 0) newTop = 0;
-      if (newTop > maxTop) newTop = maxTop;
+      if (newTop > winHeight - pinHeight) newTop = winHeight - pinHeight;
 
-      // 应用限制后的位置
       pin.style.left = newLeft + 'px';
       pin.style.top = newTop + 'px';
 
@@ -391,6 +406,30 @@
       isDragging = false;
       bgImg.src = 'images/movepin1.png';
       pin.classList.remove('dragging');
+      targetAngle = 0; 
+    }
+    
+    // 核心：物理弹簧渲染循环
+    function renderSwing() {
+      // 当完全静止且没有拖拽时，停止循环
+      if (!isDragging && Math.abs(angle) < 0.05 && Math.abs(angularVel) < 0.05 && Math.abs(targetAngle) < 0.05) {
+        angle = 0;
+        pinInner.style.transform = `rotate(0deg)`;
+        return;
+      }
+
+      // 【核心修复】：让目标角度每帧自动衰减。
+      // 这样即使你鼠标按住不动（不触发 doDrag），纸张也会自动回正。
+      targetAngle *= 0.85;
+
+      // 弹簧物理公式
+      angularVel += (targetAngle - angle) * stiffness;
+      angularVel *= damping;
+      angle += angularVel;
+
+      pinInner.style.transform = `rotate(${angle}deg)`;
+
+      requestAnimationFrame(renderSwing);
     }
 
     pin.addEventListener('mousedown', startDrag);
